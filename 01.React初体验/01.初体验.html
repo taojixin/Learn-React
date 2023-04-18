@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="root"></div>
+    <div id="app"></div>
+
+
+    <!-- 添加依赖包：CDN引入 本地文件 npm下载引入 -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script> 
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+    <!--需要些type类型，否则babel无法识别转换 -->
+    <script type="text/babel">
+        // React18之前：ReactDom.render
+        // ReactDOM.render(<h2>Hello world</h2>, document.querySelector("#root"))
+
+        // React18之后：ReactDOM.createRoot:创建一个React根，之后渲染的内容会包含在这个根中
+        const root = ReactDOM.createRoot(document.querySelector("#root"))
+        // root.render:要渲染的根组件
+        root.render(<h2>Hello world</h2>)
+    </script>
+</body>
+</html>

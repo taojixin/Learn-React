@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>计数器</title>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script src="../lib/react.js"></script>
+  <script src="../lib/react-dom.js"></script>
+  <script src="../lib/babel.js"></script>
+  <script type="text/babel">
+    // 1.定义App根组件
+    class App extends React.Component {
+      constructor() {
+        super()
+        this.state = {
+          message: "Hello World"
+        }
+
+        this.btn1Click = this.btn1Click.bind(this)
+      }
+
+      btnClick() {
+        console.log(this); // undefined 原因是btnClick函数并不是我们主动调用的，而且当button发生改变时，React内部调用了btnClick函数；而它内部调用时，并不知道要如何绑定正确的this；
+      }
+      btn1Click() {
+        console.log(this);
+      }
+      btn2Click = () => {
+        console.log(this);
+      }
+      btn3Click() {
+        console.log(this);
+      }
+
+// 如何解决this的问题呢？
+//  方案一：bind给btnClick显示绑定this
+//  方案二：使用 ES6 class fields 语法
+//  方案三：事件监听时传入箭头函数（推荐）
+
+      render() {
+        const { message } = this.state
+
+        return (
+          <div>
+            <button onClick={this.btn1Click}>按钮</button>
+
+            {/* 1.this绑定方式一: bind绑定：在constructor中对方法进行显示绑定this */}
+            <button onClick={this.btn1Click}>按钮1</button>
+
+            {/* 2.this绑定方式二: ES6 class fields */}
+            <button onClick={this.btn2Click}>按钮2</button>
+
+            {/* 3.this绑定方式三: 直接传入一个箭头函数(重要) */}
+            <button onClick={() => this.btn3Click()}>按钮3</button>
+          </div>
+        )
+      }
+    }
+
+    // 2.创建root并且渲染App组件
+    const root = ReactDOM.createRoot(document.querySelector("#root"))
+    root.render(<App/>)
+  </script>
+
+</body>
+</html>
